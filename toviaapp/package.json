@@ -1,0 +1,22 @@
+{
+  "name": "toviaapp",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^15.6.1",
+    "react-css-themr": "^2.1.2",
+    "react-dom": "^15.6.1",
+    "react-toolbox": "^2.0.0-beta.12"
+  },
+  "devDependencies": {
+    "react-scripts": "1.0.7",
+    "react-toolbox-themr": "^1.0.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "toolbox": "react-toolbox-themr",
+    "eject": "react-scripts eject"
+  }
+}
