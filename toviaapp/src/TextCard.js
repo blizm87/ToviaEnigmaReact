@@ -11,8 +11,8 @@ class TextCard extends Component {
     const dummyText = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.';
 
     return (
-      <div>
-        <Card style={{width: '350px'}}>
+      <div id='textCardContainer'>
+        <Card style={{width: '350px'}} id='cardContainer'>
           <CardTitle
             avatar="https://placeimg.com/80/80/animals"
             title="Avatar style title"
