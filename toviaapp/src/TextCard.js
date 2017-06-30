@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardMedia, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
+import { Card, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
 import Button from 'react-toolbox/lib/button/Button';
 import Input from 'react-toolbox/lib/input';
 import DatePicker from 'react-toolbox/lib/date_picker/DatePicker';
@@ -19,8 +19,9 @@ class TextCard extends Component {
   }
 
 
-  handleChange = (message, value) => {
-    this.setState({...this.state, [message]: value});
+
+  handleChange = (inputKey, value) => {
+    this.setState({...this.state, [inputKey]: value});
   };
 
   handleToggle = () => {
