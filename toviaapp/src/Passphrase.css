@@ -1,3 +1,11 @@
 #passPhraseContainer {
-  text-align: center;
+
 }
+
+    #phInput {
+      margin: 0 auto;
+    }
+
+        #phInput:active {
+          width: 100px;
+        }

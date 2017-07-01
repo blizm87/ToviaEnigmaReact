@@ -1,0 +1,7 @@
+#ioCardPlatformContainer {
+  border: 1px solid red;
+}
+
+    #sendCardContainer {
+      display: inline-block;
+    }
