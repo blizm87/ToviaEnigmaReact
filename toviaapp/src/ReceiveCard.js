@@ -15,12 +15,7 @@ class ReceiveCard extends Component {
 
   constructor() {
     super();
-    this.state = { name: '', message: '', date2: '', encryptdialogueactive: false, decryptdialogueactive: false };
-  };
-
-  handleEncryption = () => {
-    console.log('encryption completed')
-    this.handleEncryptToggle()
+    this.state = { name: '', message: '', date2: '', decryptdialogueactive: false };
   };
 
   handleDecryption = () => {
@@ -32,18 +27,9 @@ class ReceiveCard extends Component {
     this.setState({...this.state, [inputKey]: value});
   };
 
-  handleEncryptToggle = () => {
-    this.setState({encryptdialogueactive: !this.state.encryptdialogueactive});
-  };
-
   handleDecryptToggle = () => {
     this.setState({decryptdialogueactive: !this.state.decryptdialogueactive});
   };
-
-  encryptActions = [
-    { label: "Close", onClick: this.handleEncryptToggle },
-    { label: "Encrypt", onClick: this.handleEncryption }
-  ];
 
   decryptActions = [
     { label: "Close", onClick: this.handleDecryptToggle },
@@ -57,8 +43,8 @@ class ReceiveCard extends Component {
           <CardTitle title="Tovia's Enigma" subtitle="Receive Card" />
 
           <CardText>
-            <Input id="phInput" required style={{width:"100px"}}
-              type="text" placeholder="Passphrase" label="Passphrase" onChange={this.handleChange.bind(this, "passphrase")}
+            <Input id="phInput" required type="text"
+              label="Passphrase" onChange={this.handleChange.bind(this, "passphrase")}
               value={this.state.passphrase} maxLength={5} />
           </CardText>
 
@@ -71,18 +57,7 @@ class ReceiveCard extends Component {
           </CardText>
 
           <CardActions>
-            <Button label="Encrypt" onClick={this.handleEncryptToggle} />
             <Button label="Decrypt" onClick={this.handleDecryptToggle} />
-
-            <Dialog
-              actions={this.encryptActions}
-              active={this.state.encryptdialogueactive}
-              onEscKeyDown={this.handleEncryptToggle}
-              onOverlayClick={this.handleEncryptToggle}
-              title='Encrypt Message'
-            >
-              <Input required multiline type='text' label='Message' onChange={this.handleChange.bind(this, 'message')} value={this.state.message} maxLength={120} />
-            </Dialog>
 
             <Dialog
               actions={this.decryptActions}

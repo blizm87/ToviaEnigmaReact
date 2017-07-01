@@ -1,7 +1,7 @@
 #receiveContainer {
-  display: inline-block;
+  margin-left: 3.1em;
   vertical-align: top;
-  float: right;
+  display: inline-block;
 }
 
     #receiveCardContainer {

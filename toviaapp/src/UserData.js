@@ -5,7 +5,6 @@ import Input from 'react-toolbox/lib/input';
 import DatePicker from 'react-toolbox/lib/date_picker/DatePicker';
 import Dialog from 'react-toolbox/lib/dialog/Dialog';
 import Avatar from 'react-toolbox/lib/avatar/Avatar';
-import Passphrase from './Passphrase.js';
 import './UserData.css';
 
 const datetime = new Date(Date.now());

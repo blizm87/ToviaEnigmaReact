@@ -7,6 +7,7 @@ import Dialog from 'react-toolbox/lib/dialog/Dialog';
 import Avatar from 'react-toolbox/lib/avatar/Avatar';
 import UserData from './UserData.js';
 import ReceiveCard from './ReceiveCard.js';
+import MessageHistory from './MessageHistory.js';
 import './IOCardPlatform.css';
 
 const datetime = new Date(Date.now());
@@ -17,17 +18,12 @@ class IOCardPlatform extends Component {
 
   constructor() {
     super();
-    this.state = { name: '', message: '', date2: '', encryptdialogueactive: false, decryptdialogueactive: false };
+    this.state = { name: '', message: '', date2: '', encryptdialogueactive: false };
   };
 
   handleEncryption = () => {
     console.log('encryption completed')
     this.handleEncryptToggle()
-  };
-
-  handleDecryption = () => {
-    console.log('decryption completed')
-    this.handleDecryptToggle()
   };
 
   handleChange = (inputKey, value) => {
@@ -38,18 +34,9 @@ class IOCardPlatform extends Component {
     this.setState({encryptdialogueactive: !this.state.encryptdialogueactive});
   };
 
-  handleDecryptToggle = () => {
-    this.setState({decryptdialogueactive: !this.state.decryptdialogueactive});
-  };
-
   encryptActions = [
     { label: "Close", onClick: this.handleEncryptToggle },
     { label: "Encrypt", onClick: this.handleEncryption }
-  ];
-
-  decryptActions = [
-    { label: "Close", onClick: this.handleDecryptToggle },
-    { label: "Decrypt", onClick: this.handleDecryption }
   ];
 
   render() {
@@ -59,8 +46,8 @@ class IOCardPlatform extends Component {
           <CardTitle title="Tovia's Enigma" subtitle="Send Card" />
 
           <CardText>
-            <Input id="phInput" required style={{width:"100px"}}
-              type="text" placeholder="Passphrase" label="Passphrase" onChange={this.handleChange.bind(this, "passphrase")}
+            <Input id="phInput" required type="text"
+              label="Passphrase" onChange={this.handleChange.bind(this, "passphrase")}
               value={this.state.passphrase} maxLength={5} />
           </CardText>
 
@@ -74,7 +61,6 @@ class IOCardPlatform extends Component {
 
           <CardActions>
             <Button label="Encrypt" onClick={this.handleEncryptToggle} />
-            <Button label="Decrypt" onClick={this.handleDecryptToggle} />
 
             <Dialog
               actions={this.encryptActions}
@@ -85,21 +71,12 @@ class IOCardPlatform extends Component {
             >
               <Input required multiline type='text' label='Message' onChange={this.handleChange.bind(this, 'message')} value={this.state.message} maxLength={120} />
             </Dialog>
-
-            <Dialog
-              actions={this.decryptActions}
-              active={this.state.decryptdialogueactive}
-              onEscKeyDown={this.handleDecryptToggle}
-              onOverlayClick={this.handleDecryptToggle}
-              title='Decrypt Message'
-            >
-              <Input required multiline type='text' label='Message' onChange={this.handleChange.bind(this, 'message')} value={this.state.message} maxLength={120} />
-            </Dialog>
           </CardActions>
         </Card>
 
         <UserData />
         <ReceiveCard />
+        <MessageHistory />
       </div>
     );
   }
