@@ -5,7 +5,6 @@ import Input from 'react-toolbox/lib/input';
 import DatePicker from 'react-toolbox/lib/date_picker/DatePicker';
 import Dialog from 'react-toolbox/lib/dialog/Dialog';
 import Avatar from 'react-toolbox/lib/avatar/Avatar';
-import Passphrase from './Passphrase.js';
 import './ReceiveCard.css';
 
 const datetime = new Date(Date.now());
@@ -58,7 +57,9 @@ class ReceiveCard extends Component {
           <CardTitle title="Tovia's Enigma" subtitle="Receive Card" />
 
           <CardText>
-            <Passphrase />
+            <Input id="phInput" required style={{width:"100px"}}
+              type="text" placeholder="Passphrase" label="Passphrase" onChange={this.handleChange.bind(this, "passphrase")}
+              value={this.state.passphrase} maxLength={5} />
           </CardText>
 
           <CardText>

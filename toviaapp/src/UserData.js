@@ -61,10 +61,6 @@ class UserData extends Component {
             <Input required type='text' label='Name' icon={image} onChange={this.handleChange.bind(this, 'name')} value={this.state.name} />
           </CardText>
 
-          <CardText>
-            <Passphrase />
-          </CardText>
-
         </Card>
       </div>
     );

@@ -6,7 +6,6 @@ import DatePicker from 'react-toolbox/lib/date_picker/DatePicker';
 import Dialog from 'react-toolbox/lib/dialog/Dialog';
 import Avatar from 'react-toolbox/lib/avatar/Avatar';
 import UserData from './UserData.js';
-import Passphrase from './Passphrase.js';
 import ReceiveCard from './ReceiveCard.js';
 import './IOCardPlatform.css';
 
@@ -60,7 +59,9 @@ class IOCardPlatform extends Component {
           <CardTitle title="Tovia's Enigma" subtitle="Send Card" />
 
           <CardText>
-            <Passphrase />
+            <Input id="phInput" required style={{width:"100px"}}
+              type="text" placeholder="Passphrase" label="Passphrase" onChange={this.handleChange.bind(this, "passphrase")}
+              value={this.state.passphrase} maxLength={5} />
           </CardText>
 
           <CardText>
