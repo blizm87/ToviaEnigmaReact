@@ -4,12 +4,10 @@ import Button from 'react-toolbox/lib/button/Button';
 import Input from 'react-toolbox/lib/input';
 import DatePicker from 'react-toolbox/lib/date_picker/DatePicker';
 import Dialog from 'react-toolbox/lib/dialog/Dialog';
-import Avatar from 'react-toolbox/lib/avatar/Avatar';
 import './ReceiveCard.css';
 
 const datetime = new Date(Date.now());
 const min_datetime = new Date(new Date(datetime).setDate(8));
-const image = <Avatar style={{backgroundColor: 'deepskyblue'}} icon="folder" />
 
 class ReceiveCard extends Component {
 

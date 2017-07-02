@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
+import { Card, CardTitle, CardText } from 'react-toolbox/lib/card';
 import './MessageHistory.css';
 
 class MessageHistory extends Component {

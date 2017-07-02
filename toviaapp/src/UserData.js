@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
-import { Card, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
-import Button from 'react-toolbox/lib/button/Button';
+import { Card, CardTitle, CardText } from 'react-toolbox/lib/card';
 import Input from 'react-toolbox/lib/input';
-import DatePicker from 'react-toolbox/lib/date_picker/DatePicker';
-import Dialog from 'react-toolbox/lib/dialog/Dialog';
 import Avatar from 'react-toolbox/lib/avatar/Avatar';
 import './UserData.css';
 
-const datetime = new Date(Date.now());
-const min_datetime = new Date(new Date(datetime).setDate(8));
 const image = <Avatar style={{backgroundColor: 'deepskyblue'}} icon="folder" />
 
 class UserData extends Component {
@@ -18,37 +13,9 @@ class UserData extends Component {
     this.state = { name: '', message: '', date2: '', encryptdialogueactive: false, decryptdialogueactive: false };
   };
 
-  handleEncryption = () => {
-    console.log('encryption completed')
-    this.handleEncryptToggle()
-  };
-
-  handleDecryption = () => {
-    console.log('decryption completed')
-    this.handleDecryptToggle()
-  };
-
   handleChange = (inputKey, value) => {
     this.setState({...this.state, [inputKey]: value});
   };
-
-  handleEncryptToggle = () => {
-    this.setState({encryptdialogueactive: !this.state.encryptdialogueactive});
-  };
-
-  handleDecryptToggle = () => {
-    this.setState({decryptdialogueactive: !this.state.decryptdialogueactive});
-  };
-
-  encryptActions = [
-    { label: "Close", onClick: this.handleEncryptToggle },
-    { label: "Encrypt", onClick: this.handleEncryption }
-  ];
-
-  decryptActions = [
-    { label: "Close", onClick: this.handleDecryptToggle },
-    { label: "Decrypt", onClick: this.handleDecryption }
-  ];
 
   render() {
     return (
