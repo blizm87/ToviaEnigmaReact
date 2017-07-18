@@ -16,7 +16,19 @@ class IOCardPlatform extends Component {
 
   constructor() {
     super();
-    this.state = { name: '', message: '', date2: '', encryptdialogueactive: false };
+    this.state = { profile: '', message: '', date2: '', encryptdialogueactive: false };
+  };
+
+  handleProfileData = () => {
+    let urlParams = new URLSearchParams(window.location.search);
+    let paramRes = urlParams.get('userId')
+    fetch(`http://127.0.0.1:3001/profile?userId=${paramRes}`)
+      .then( res => res.json() )
+      .then( profiledata => {
+        console.log('HELLO JKS')
+        console.log(profiledata.data[0])
+        this.setState({profile: profiledata.data[0]});
+      })
   };
 
   handleEncryption = () => {
@@ -36,6 +48,10 @@ class IOCardPlatform extends Component {
     { label: "Close", onClick: this.handleEncryptToggle },
     { label: "Encrypt", onClick: this.handleEncryption }
   ];
+
+  componentWillMount() {
+    this.handleProfileData()
+  };
 
   render() {
     return (
@@ -72,7 +88,7 @@ class IOCardPlatform extends Component {
           </CardActions>
         </Card>
 
-        <UserData />
+        <UserData data={this.state.profile} />
         <ReceiveCard />
         <MessageHistory />
       </div>

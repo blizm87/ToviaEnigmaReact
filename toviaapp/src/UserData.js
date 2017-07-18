@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import { Card, CardTitle, CardText } from 'react-toolbox/lib/card';
-import Input from 'react-toolbox/lib/input';
-import Avatar from 'react-toolbox/lib/avatar/Avatar';
+import { Card, CardTitle } from 'react-toolbox/lib/card';
 import './UserData.css';
 
-const image = <Avatar style={{backgroundColor: 'deepskyblue'}} icon="folder" />
 
 class UserData extends Component {
 
@@ -13,9 +10,9 @@ class UserData extends Component {
     this.state = { name: '', message: '', date2: '', encryptdialogueactive: false, decryptdialogueactive: false };
   };
 
-  handleChange = (inputKey, value) => {
-    this.setState({...this.state, [inputKey]: value});
-  };
+  // handleChange = (inputKey, value) => {
+  //   this.setState({...this.state, [inputKey]: value});
+  // };
 
   render() {
     return (
@@ -23,9 +20,11 @@ class UserData extends Component {
         <Card style={{width: '350px'}} id='userDataCardContainer'>
           <CardTitle title="Tovia's Enigma" subtitle="Profile Status" />
 
-          <CardText id='profileContainer'>
-            <Input required type='text' label='Name' icon={image} onChange={this.handleChange.bind(this, 'name')} value={this.state.name} />
-          </CardText>
+          <CardTitle id='profileContainer'
+            avatar={this.props.data.imageUrl}
+            title={this.props.data.displayName}
+            subtitle={this.props.data.gender}
+          />
 
         </Card>
       </div>
