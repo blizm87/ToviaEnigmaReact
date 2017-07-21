@@ -1,9 +1,8 @@
-#receiveContainer {
+#sendContainer {
   margin-left: 3.1em;
-  vertical-align: top;
   display: inline-block;
 }
 
-    #receiveCardContainer {
+    #sendCardContainer {
       min-height: 407px;
     }

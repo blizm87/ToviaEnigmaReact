@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Card, CardTitle } from 'react-toolbox/lib/card';
+import { Card, CardTitle, CardText } from 'react-toolbox/lib/card';
+import Button from 'react-toolbox/lib/button/Button';
 import './UserData.css';
 
 
@@ -7,7 +8,7 @@ class UserData extends Component {
 
   constructor() {
     super();
-    this.state = { name: '', message: '', date2: '', encryptdialogueactive: false, decryptdialogueactive: false };
+    this.state = { name: '', newPassPhrase: '' };
   };
 
   // handleChange = (inputKey, value) => {
@@ -25,6 +26,11 @@ class UserData extends Component {
             title={this.props.data.displayName}
             subtitle={this.props.data.gender}
           />
+
+          <CardText>
+            <p>Your Passphrase - <Button flat primary>{this.props.passPhrase}</Button></p>
+            <Button flat primary>Generate New Passphrase</Button>
+          </CardText>
 
         </Card>
       </div>
