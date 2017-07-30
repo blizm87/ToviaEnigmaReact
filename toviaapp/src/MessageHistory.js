@@ -1,39 +1,42 @@
 import React, { Component } from 'react';
-import { Card, CardTitle } from 'react-toolbox/lib/card';
-import { Table } from 'react-toolbox/lib/table';
-// import Button from 'react-toolbox/lib/button/Button';
+import { Card, CardTitle, CardText } from 'react-toolbox/lib/card';
+import { Table, TableHead, TableRow, TableCell } from 'react-toolbox/lib/table';
 import './MessageHistory.css';
-
-const UserModelInbox = {
-  From: {type: String},
-  "Receive Date": {type: String},
-  "Expire Date": {type: String},
-  Content: {type: String}
-};
-
-const UserModelOutbox = {
-  To: {type: String},
-  PassPhrase: {type: String},
-  "Send Date": {type: String},
-  "Expire Date": {type: String},
-  Content: {type: String}
-};
 
 class MessageHistory extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { selected: [], source: 'entry'};
+    this.state = { profile: this.props.data, selected: [], inbox: this.props.inbox, outbox: this.props.outbox};
   }
 
   handleSelect = (selected) => {
     this.setState({selected});
   };
 
-  handleChange = (row, key, value) => {
-    const source = this.state.source;
-    source[row][key] = value;
-    this.setState({source});
+  createInboxTable = () => {
+    if(typeof this.props.inbox === 'object') {
+        return (this.props.inbox.map((item, idx) =>
+          <TableRow key={idx}>
+            <TableCell>{item.From}</TableCell>
+            <TableCell>{new Date(item.ReceiveDate).toDateString()}</TableCell>
+            <TableCell>{new Date(item.ExpireDate).toDateString()}</TableCell>
+          </TableRow>
+        ));
+    }
+  };
+
+  createOutboxTable = () => {
+    if(typeof this.props.outbox === 'object') {
+        return (this.props.outbox.map((item, idx) =>
+          <TableRow key={idx}>
+            <TableCell>{item.sentTo}</TableCell>
+            <TableCell>{item.PassPhrase}</TableCell>
+            <TableCell>{new Date(item.SendDate).toDateString()}</TableCell>
+            <TableCell>{new Date(item.ExpireDate).toDateString()}</TableCell>
+          </TableRow>
+        ));
+    }
   };
 
   render() {
@@ -41,30 +44,34 @@ class MessageHistory extends Component {
       <div id="messageHistoryContainer">
         <Card style={{width: '99.85%', height: '360px'}} id='messageHistoryCardContainer'>
           <CardTitle id="cardHeader" title="Tovia's Enigma" subtitle="Message History" />
+          <CardText>
+            <div id='messageHistoryMainContainer'>
+              <div id="inboxContainer">
+                <h3>Inbox</h3>
+                <Table>
+                  <TableHead>
+                    <TableCell>From</TableCell>
+                    <TableCell>Date Received</TableCell>
+                    <TableCell>Expire Date</TableCell>
+                  </TableHead>
+                  {this.createInboxTable()}
+                </Table>
 
-          <div id='messageHistoryMainContainer'>
-            <div id="inboxContainer">
-              <h3>Inbox</h3>
-              <h5>{this.props.data.displayName}</h5>
-              <Table
-                model={UserModelInbox}
-                onSelect={this.handleSelect}
-                selectable
-                selected={this.state.selected}
-                source={this.state.source}
-              />
+              </div>
+              <div id="outboxContainer">
+                <h3>Outbox</h3>
+                <Table>
+                  <TableHead>
+                    <TableCell>Send To</TableCell>
+                    <TableCell>PassPhrase</TableCell>
+                    <TableCell>Date Sent</TableCell>
+                    <TableCell>Expire Date</TableCell>
+                  </TableHead>
+                  {this.createOutboxTable()}
+                </Table>
+              </div>
             </div>
-            <div id="outboxContainer">
-              <h3>Outbox</h3>
-              <Table
-                model={UserModelOutbox}
-                onSelect={this.handleSelect}
-                selectable
-                selected={this.state.selected}
-                source={this.state.source}
-              />
-            </div>
-          </div>
+          </CardText>
         </Card>
       </div>
     );

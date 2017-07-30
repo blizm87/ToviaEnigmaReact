@@ -40,6 +40,7 @@ class SendCard extends Component {
       encryptedMessage: '',
       date2: ''
     })
+    this.props.getInOutBox();
   };
 
   handleChange = (inputKey, value) => {

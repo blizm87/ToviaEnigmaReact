@@ -12,15 +12,36 @@
 
         #inboxContainer {
           width: 49.5%;
-          border: 1px solid red;
+          height: 250px;
+          max-height: 250px;
+          border: 1px solid black;
           text-align: center;
           display: inline-block;
         }
 
+            #inboxContainer>Table {
+              border-top: 1px solid black;
+              border-right: 1px solid black;
+              height: 195px;
+              max-height: 195px;
+              display: block;
+              overflow: scroll;
+            }
+
         #outboxContainer {
           width: 49.5%;
-          border: 1px solid green;
+          height: 250px;
+          max-height: 250px;
+          border: 1px solid black;
           text-align: center;
           float: right;
         }
+
+            #outboxContainer>Table {
+              border-top: 1px solid black;
+              height: 195px;
+              max-height: 195px;
+              display: block;
+              overflow: scroll;
+            }
 

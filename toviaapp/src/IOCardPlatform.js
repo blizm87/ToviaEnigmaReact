@@ -9,7 +9,7 @@ class IOCardPlatform extends Component {
 
   constructor() {
     super();
-    this.state = { profile: '', passPhrase: '' };
+    this.state = { profile: '', passPhrase: '', userInbox: '', userOutbox: '' };
     this.handleProfileData = this.handleProfileData.bind(this);
     this.handleProfileData();
   };
@@ -28,7 +28,7 @@ class IOCardPlatform extends Component {
   handleProfileData() {
     let urlParams = new URLSearchParams(window.location.search);
     let paramRes = urlParams.get('userId')
-    let query = `{
+    const query = `{
       getProfileData(userId: \"${paramRes}\") {
         userId
         displayName
@@ -38,12 +38,14 @@ class IOCardPlatform extends Component {
           fromUser
           content
           expireDate
+          createdAt
         }
         outbox {
           toUser
           passPhrase
           content
           expireDate
+          createdAt
         }
       }
     }`
@@ -58,9 +60,38 @@ class IOCardPlatform extends Component {
     })
       .then( res => res.json() )
       .then( messageData => {
-        this.setState({profile: messageData.data.getProfileData[0]});
+        let result = messageData.data.getProfileData[0];
+        // if(typeof result == 'string') {
+
+        // }
+        let outboxEntry = [];
+        for(var i = result.outbox.length - 1; i >= 0; i--){
+          outboxEntry.push({
+            sentTo: result.outbox[i].toUser,
+            PassPhrase: result.outbox[i].passPhrase,
+            // content: result.outbox[i].content,
+            SendDate: result.outbox[i].createdAt,
+            ExpireDate: result.outbox[i].expireDate
+          })
+        }
+        let inboxEntry = [];
+        for(var j = result.inbox.length - 1; j >= 0; j--){
+          inboxEntry.push({
+            From: result.inbox[j].fromUser,
+            // PassPhrase: result.inbox[j].passPhrase,
+            // content: result.inbox[j].content,
+            ReceiveDate: result.inbox[j].createdAt,
+            ExpireDate: result.inbox[j].expireDate
+          })
+        }
+        this.setState({
+          profile: result,
+          userInbox: inboxEntry,
+          userOutbox: outboxEntry
+        });
         console.log(this.state.profile)
-        console.log(this.state.profile.outbox)
+        console.log(this.state.userInbox)
+        console.log(this.state.userOutbox)
       })
   };
 
@@ -72,9 +103,9 @@ class IOCardPlatform extends Component {
     return (
       <div id='ioCardPlatformContainer'>
         <UserData data={this.state.profile} passPhrase={this.state.passPhrase} passPhraseChange={this.handlePassPhrase}/>
-        <SendCard data={this.state.profile} passPhrase={this.state.passPhrase} />
+        <SendCard data={this.state.profile} passPhrase={this.state.passPhrase} getInOutBox={this.handleProfileData} />
         <ReceiveCard data={this.state.profile} />
-        <MessageHistory data={this.state.profile} />
+        <MessageHistory data={this.state.profile} inbox={this.state.userInbox} outbox={this.state.userOutbox} />
       </div>
     );
   }
