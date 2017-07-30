@@ -1,7 +1,26 @@
 #messageHistoryContainer {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
-    #cardHeader {
+    #messageHistoryCardContainer {
       margin: 0 auto;
     }
+
+        #cardHeader {
+          margin: 0 auto;
+        }
+
+        #inboxContainer {
+          width: 49.5%;
+          border: 1px solid red;
+          text-align: center;
+          display: inline-block;
+        }
+
+        #outboxContainer {
+          width: 49.5%;
+          border: 1px solid green;
+          text-align: center;
+          float: right;
+        }
+

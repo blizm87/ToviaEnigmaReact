@@ -5,3 +5,11 @@
     #userDataCardContainer {
       min-height: 407px;
     }
+
+    #passPhraseContainer {
+      text-align: center;
+    }
+
+        #passPhraseContainer>Button, #passPhraseContainer>p>Button:hover {
+          background-color: white;
+        }

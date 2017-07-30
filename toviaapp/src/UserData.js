@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { Card, CardTitle, CardText } from 'react-toolbox/lib/card';
 import Button from 'react-toolbox/lib/button/Button';
+import Link from 'react-toolbox/lib/link';
 import './UserData.css';
 
 
 class UserData extends Component {
 
-  constructor() {
-    super();
-    this.state = { name: '', newPassPhrase: '' };
+  constructor(props) {
+    super(props);
+    this.state = { name: '' };
   };
 
   // handleChange = (inputKey, value) => {
@@ -27,9 +28,9 @@ class UserData extends Component {
             subtitle={this.props.data.gender}
           />
 
-          <CardText>
-            <p>Your Passphrase - <Button flat primary>{this.props.passPhrase}</Button></p>
-            <Button flat primary>Generate New Passphrase</Button>
+          <CardText id='passPhraseContainer'>
+            <p>Your Passphrase: </p><Link active href='#'>{this.props.passPhrase}</Link>
+            <Button flat primary onClick={this.props.passPhraseChange}>Generate New Passphrase</Button>
           </CardText>
 
         </Card>

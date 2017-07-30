@@ -13,14 +13,33 @@ const min_datetime = new Date(datetime);
 
 class SendCard extends Component {
 
-  constructor() {
-    super();
-    this.state = { name: '', message: '', date2: '', encryptdialogueactive: false };
+  constructor(props) {
+    super(props);
+    this.state = { name: '', message: '', encryptedMessage: '', date2: '', sendTo: '', encryptdialogueactive: false };
   };
 
   handleEncryption = () => {
-    console.log('encryption completed')
     this.handleEncryptToggle()
+    fetch(`http://127.0.0.1:3001/profile/${this.props.data.userId}`, {
+      headers: {
+        "Accept": "application/json",
+        "Content-type": "application/json"
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        toUser: this.state.sendTo,
+        fromUser: this.props.data.displayName,
+        passPhrase: this.props.passPhrase,
+        content: this.state.encryptedMessage,
+        expireDate: this.state.date2
+      })
+    }).then(function(res){  console.log(res)  })
+    this.setState({
+      sendTo: '',
+      message: '',
+      encryptedMessage: '',
+      date2: ''
+    })
   };
 
   handleChange = (inputKey, value) => {
@@ -28,12 +47,16 @@ class SendCard extends Component {
   };
 
   handleEncryptToggle = () => {
-    this.setState({encryptdialogueactive: !this.state.encryptdialogueactive});
+    let encryptionResult = btoa(this.state.message)
+    this.setState({
+      encryptedMessage: encryptionResult,
+      encryptdialogueactive: !this.state.encryptdialogueactive
+    });
   };
 
   encryptActions = [
     { label: "Close", onClick: this.handleEncryptToggle },
-    { label: "Encrypt", onClick: this.handleEncryption }
+    { label: "Send", onClick: this.handleEncryption }
   ];
 
   render() {
@@ -43,9 +66,8 @@ class SendCard extends Component {
           <CardTitle title="Tovia's Enigma" subtitle="Send Card" />
 
           <CardText>
-            <Input id="phInput" required type="text"
-              label="Passphrase" onChange={this.handleChange.bind(this, "passphrase")}
-              value={this.state.passphrase} maxLength={5} />
+            <Input id="messageTo" required type="text"
+              label="Send To" onChange={this.handleChange.bind(this, "sendTo")} value={this.state.sendTo} />
           </CardText>
 
           <CardText>
@@ -66,7 +88,7 @@ class SendCard extends Component {
               onOverlayClick={this.handleEncryptToggle}
               title='Encrypt Message'
             >
-              <Input required multiline type='text' label='Message' onChange={this.handleChange.bind(this, 'message')} value={this.state.message} maxLength={120} />
+              <Input required multiline type='text' label='Message' onChange={this.handleChange.bind(this, 'encryptedMessage')} value={this.state.encryptedMessage} maxLength={120} />
             </Dialog>
           </CardActions>
         </Card>

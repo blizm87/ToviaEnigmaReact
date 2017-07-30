@@ -11,8 +11,8 @@ const min_datetime = new Date(new Date(datetime).setDate(8));
 
 class ReceiveCard extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = { name: '', message: '', date2: '', decryptdialogueactive: false };
   };
 
