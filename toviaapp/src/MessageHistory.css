@@ -11,7 +11,7 @@
         }
 
         #inboxContainer {
-          width: 49.5%;
+          width: 48.9%;
           height: 250px;
           max-height: 250px;
           border: 1px solid black;
@@ -21,15 +21,18 @@
 
             #inboxContainer>Table {
               border-top: 1px solid black;
-              border-right: 1px solid black;
               height: 195px;
               max-height: 195px;
               display: block;
               overflow: scroll;
             }
 
+                .inboxTdWidth {
+                  min-width: 13.5em;
+                }
+
         #outboxContainer {
-          width: 49.5%;
+          width: 48.9%;
           height: 250px;
           max-height: 250px;
           border: 1px solid black;
@@ -44,4 +47,8 @@
               display: block;
               overflow: scroll;
             }
+
+                .outboxTdWidth {
+                  min-width: 9em;
+                }
 

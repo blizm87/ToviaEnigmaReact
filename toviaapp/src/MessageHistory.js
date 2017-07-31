@@ -50,9 +50,9 @@ class MessageHistory extends Component {
                 <h3>Inbox</h3>
                 <Table>
                   <TableHead>
-                    <TableCell>From</TableCell>
-                    <TableCell>Date Received</TableCell>
-                    <TableCell>Expire Date</TableCell>
+                    <TableCell className='inboxTdWidth'>From</TableCell>
+                    <TableCell className='inboxTdWidth'>Date Received</TableCell>
+                    <TableCell className='inboxTdWidth'>Expire Date</TableCell>
                   </TableHead>
                   {this.createInboxTable()}
                 </Table>
@@ -62,10 +62,10 @@ class MessageHistory extends Component {
                 <h3>Outbox</h3>
                 <Table>
                   <TableHead>
-                    <TableCell>Send To</TableCell>
-                    <TableCell>PassPhrase</TableCell>
-                    <TableCell>Date Sent</TableCell>
-                    <TableCell>Expire Date</TableCell>
+                    <TableCell className='outboxTdWidth'>Send To</TableCell>
+                    <TableCell className='outboxTdWidth'>PassPhrase</TableCell>
+                    <TableCell className='outboxTdWidth'>Date Sent</TableCell>
+                    <TableCell className='outboxTdWidth'>Expire Date</TableCell>
                   </TableHead>
                   {this.createOutboxTable()}
                 </Table>
