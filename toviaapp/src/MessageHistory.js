@@ -7,12 +7,39 @@ class MessageHistory extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { profile: this.props.data, selected: [], inbox: this.props.inbox, outbox: this.props.outbox};
+    this.state = {
+      profile: this.props.data, selected: [],
+      inbox: this.props.inbox, outbox: this.props.outbox,
+      true: true, false: false, selected: false,
+      check1: true, check2: false
+    };
   }
 
-  handleSelect = (selected) => {
-    this.setState({selected});
+  handleSelect = (num, value) => {
+    let allRows = document.querySelectorAll('Table>tbody')[num].querySelectorAll('tr');
+    let target = document.querySelectorAll('Table>tbody')[num].querySelectorAll('tr>td>label>div')[value];
+    for(var i = 0; i < allRows.length; i++){
+      if(i !== value[0]) {
+        allRows[i].querySelector('td>label>div').className = '_1CXAo';
+      }
+    }
+    if(target.className == '_1CXAo'){
+      target.className = '_1CXAo nSz7s';
+      console.log('change')
+    } else {
+      target.className = '_1CXAo';
+      console.log('original')
+    }
   };
+
+  handleClick = (field, value) => {
+    console.log(field)
+    console.log(this.state.check1)
+    console.log(value)
+    console.log(this.state.check1)
+    this.setState({...this.state, [field]: value});
+    console.log(this.state.check1)
+  }
 
   createInboxTable = () => {
     if(typeof this.props.inbox === 'object') {
@@ -48,7 +75,7 @@ class MessageHistory extends Component {
             <div id='messageHistoryMainContainer'>
               <div id="inboxContainer">
                 <h3>Inbox</h3>
-                <Table>
+                <Table onRowSelect={this.handleSelect.bind(this, 0)}>
                   <TableHead>
                     <TableCell className='inboxTdWidth'>From</TableCell>
                     <TableCell className='inboxTdWidth'>Date Received</TableCell>
@@ -56,11 +83,10 @@ class MessageHistory extends Component {
                   </TableHead>
                   {this.createInboxTable()}
                 </Table>
-
               </div>
               <div id="outboxContainer">
                 <h3>Outbox</h3>
-                <Table>
+                <Table onRowSelect={this.handleSelect.bind(this, 1)}>
                   <TableHead>
                     <TableCell className='outboxTdWidth'>Send To</TableCell>
                     <TableCell className='outboxTdWidth'>PassPhrase</TableCell>
