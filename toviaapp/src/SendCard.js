@@ -9,14 +9,11 @@ import './SendCard.css';
 const datetime = new Date(Date.now());
 const min_datetime = new Date(datetime);
 
-// new Date(datetime).setDate(datetime.getDate())
-
 class SendCard extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { name: '', message: '', encryptedMessage: '',
-     date2: '', sendTo: '', encryptdialogueactive: false };
+    this.state = { name: '', message: '', date2: '', sendTo: '', encryptdialogueactive: false };
   };
 
   handleEncryption = () => {
@@ -31,7 +28,7 @@ class SendCard extends Component {
         toUser: this.state.sendTo,
         fromUser: this.props.data.displayName,
         passPhrase: this.props.passPhrase,
-        content: this.state.encryptedMessage,
+        content: this.state.message,
         expireDate: this.state.date2
       })
     }).then(function(res){  console.log(res)  })
@@ -49,9 +46,7 @@ class SendCard extends Component {
   };
 
   handleEncryptToggle = () => {
-    let encryptionResult = btoa(this.state.message)
     this.setState({
-      encryptedMessage: encryptionResult,
       encryptdialogueactive: !this.state.encryptdialogueactive
     });
   };
@@ -90,7 +85,7 @@ class SendCard extends Component {
               onOverlayClick={this.handleEncryptToggle}
               title='Encrypt Message'
             >
-              <Input required multiline type='text' label='Message' value={this.state.encryptedMessage} maxLength={120} />
+              <Input required multiline type='text' label='Message' value={this.state.message} maxLength={120} />
             </Dialog>
           </CardActions>
         </Card>

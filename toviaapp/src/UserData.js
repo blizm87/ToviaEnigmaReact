@@ -12,10 +12,6 @@ class UserData extends Component {
     this.state = { name: '' };
   };
 
-  // handleChange = (inputKey, value) => {
-  //   this.setState({...this.state, [inputKey]: value});
-  // };
-
   render() {
     return (
       <div id='userDataContainer'>

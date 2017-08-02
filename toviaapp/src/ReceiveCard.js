@@ -24,7 +24,6 @@ class ReceiveCard extends Component {
   }
 
   handleDecryption = () => {
-    console.log('decryption completed')
     fetch(`http://127.0.0.1:3001/profile/decrypt/${this.state.passPhrase}`, {
       headers: {
         "Accept": "application/json",
@@ -36,8 +35,6 @@ class ReceiveCard extends Component {
       })
     }).then(res => res.json())
       .then( response => {
-        console.log(response.data)
-        console.log(response.notice)
         this.setState({decryptedMessage: response.data})
       })
   };

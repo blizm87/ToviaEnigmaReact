@@ -16,10 +16,8 @@ class IOCardPlatform extends Component {
 
   handleMessageSelect = (boxNum, rowNum) => {
     if(boxNum === 0){
-      console.log(this.state.userInbox[rowNum])
       this.setState({ activeMessage: this.state.userInbox[rowNum] });
     } else {
-      console.log(this.state.userOutbox[rowNum])
       this.setState({ activeMessage: this.state.userOutbox[rowNum] });
     }
   };
@@ -71,9 +69,6 @@ class IOCardPlatform extends Component {
       .then( res => res.json() )
       .then( messageData => {
         let result = messageData.data.getProfileData[0];
-        // if(typeof result == 'string') {
-
-        // }
         let outboxEntry = [];
         for(var i = result.outbox.length - 1; i >= 0; i--){
           outboxEntry.push({
@@ -98,9 +93,6 @@ class IOCardPlatform extends Component {
           userInbox: inboxEntry,
           userOutbox: outboxEntry
         });
-        console.log(this.state.profile)
-        console.log(this.state.userInbox)
-        console.log(this.state.userOutbox)
       })
   };
 
