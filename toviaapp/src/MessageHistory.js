@@ -31,9 +31,10 @@ class MessageHistory extends Component {
     }
     if(target.className === '_1CXAo'){
       target.className = '_1CXAo nSz7s';
-      this.props.selectMessage(num, value)
+      this.props.selectMessage(num, value, 1);
     } else {
       target.className = '_1CXAo';
+      this.props.selectMessage(num, value, 0);
     }
   };
 

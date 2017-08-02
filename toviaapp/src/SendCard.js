@@ -13,7 +13,10 @@ class SendCard extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { name: '', message: '', date2: '', sendTo: '', encryptdialogueactive: false };
+    this.state = {
+      message: '', date2: '', sendTo: '', sendToUser: '',
+      encryptdialogueactive: false, errordialogueactive: false
+    };
   };
 
   handleEncryption = () => {
@@ -46,15 +49,55 @@ class SendCard extends Component {
   };
 
   handleEncryptToggle = () => {
-    this.setState({
-      encryptdialogueactive: !this.state.encryptdialogueactive
-    });
+    if(this.state.date2 !== '' && this.state.message !== ''){
+      const query = `{
+        getProfileData {
+          displayName
+          imageUrl
+        }
+      }`
+
+      fetch('http://127.0.0.1:3001/graphql', {
+        headers: {
+          "Accept": "application/json",
+          "Content-type": "application/json"
+        },
+        method: 'POST',
+        body: JSON.stringify({query,"variables":null,"operationName":null})
+      }).then(  res => res.json() )
+        .then( (response) => {
+          response.data.getProfileData.map( (profile) => {
+            if(this.state.sendTo === profile.displayName){
+              this.setState({ sendToUser: profile.displayName });
+            }
+            return null;
+          })
+            if(this.state.sendTo === this.state.sendToUser && this.state.sendTo !== ''){
+              this.setState({
+                sendToUser: '',
+                encryptdialogueactive: !this.state.encryptdialogueactive
+              });
+            } else {
+              this.setState({
+                errordialogueactive: !this.state.errordialogueactive
+              })
+            }
+        })
+    } else {
+        this.setState({
+          errordialogueactive: !this.state.errordialogueactive
+        })
+    }
   };
 
   encryptActions = [
     { label: "Close", onClick: this.handleEncryptToggle },
     { label: "Send", onClick: this.handleEncryption }
   ];
+
+  errorActions = [
+    { label: "Close", onClick: this.handleEncryptToggle}
+  ]
 
   render() {
     return (
@@ -86,6 +129,20 @@ class SendCard extends Component {
               title='Encrypt Message'
             >
               <Input required multiline type='text' label='Message' value={this.state.message} maxLength={120} />
+            </Dialog>
+
+            <Dialog
+              actions={this.errorActions}
+              active={this.state.errordialogueactive}
+              onEscKeyDown={this.handleEncryptToggle}
+              onOverlayClick={this.handleEncryptToggle}
+              title='Error Message'
+            >
+              <Input required multiline type='text' label='Message'
+               value='An error has occured. Expiration date and message cannot be blank,
+                and a proper profile name must be entered into the "Send To" input.
+                Please double check spelling of profile name because spelling "Is" case
+                sensative. Plese exit and try again.' />
             </Dialog>
           </CardActions>
         </Card>

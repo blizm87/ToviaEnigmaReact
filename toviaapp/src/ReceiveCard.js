@@ -13,12 +13,18 @@ class ReceiveCard extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { passPhrase: '', date2: '', decryptedMessage: props.activeMessage.content, decryptdialogueactive: false };
+    this.state = { passPhrase: '', date2: '', decryptedMessage: props.activeMessage.content,
+     decryptdialogueactive: false, errordialogueactive: false
+    };
   };
 
   getDate2 = () => {
     if(typeof this.props.activeMessage === 'object'){
-      return new Date(this.props.activeMessage.ExpireDate);
+      if(this.props.activeMessage.ExpireDate !== ''){
+        return new Date(this.props.activeMessage.ExpireDate);
+      } else {
+        return this.state.date2;
+      }
     }
     return this.state.date2;
   }
@@ -44,16 +50,26 @@ class ReceiveCard extends Component {
   };
 
   handleDecryptToggle = () => {
-    this.setState({
-      decryptedMessage: this.props.activeMessage.content,
-      decryptdialogueactive: !this.state.decryptdialogueactive
-    });
+    if(this.props.activeMessage.PassPhrase === this.state.passPhrase && this.state.passPhrase !== ''){
+      this.setState({
+        decryptedMessage: this.props.activeMessage.content,
+        decryptdialogueactive: !this.state.decryptdialogueactive
+      });
+    } else {
+      this.setState({
+        errordialogueactive: !this.state.errordialogueactive
+      });
+    }
   };
 
   decryptActions = [
     { label: "Close", onClick: this.handleDecryptToggle },
     { label: "Decrypt", onClick: this.handleDecryption }
   ];
+
+  errorActions = [
+    { label: "Close", onClick: this.handleDecryptToggle }
+  ]
 
   render() {
     return (
@@ -86,6 +102,17 @@ class ReceiveCard extends Component {
               title='Decrypt Message'
             >
               <Input required multiline type='text' label='Message' value={this.state.decryptedMessage} maxLength={120} />
+            </Dialog>
+
+            <Dialog
+              actions={this.errorActions}
+              active={this.state.errordialogueactive}
+              onEscKeyDown={this.handleDecryptToggle}
+              onOverlayClick={this.handleDecryptToggle}
+              title='Error Message'
+            >
+              <Input required multiline type='text' label='Message'
+               value='Your PassPhrase is incorrect. Please exit and try again.' maxLength={120} />
             </Dialog>
           </CardActions>
         </Card>
