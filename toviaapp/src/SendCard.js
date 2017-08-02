@@ -90,7 +90,7 @@ class SendCard extends Component {
               onOverlayClick={this.handleEncryptToggle}
               title='Encrypt Message'
             >
-              <Input required multiline type='text' label='Message' onChange={this.handleChange.bind(this, 'encryptedMessage')} value={this.state.encryptedMessage} maxLength={120} />
+              <Input required multiline type='text' label='Message' value={this.state.encryptedMessage} maxLength={120} />
             </Dialog>
           </CardActions>
         </Card>

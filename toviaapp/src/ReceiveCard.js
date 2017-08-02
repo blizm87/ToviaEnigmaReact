@@ -13,12 +13,33 @@ class ReceiveCard extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { name: '', message: '', date2: '', decryptdialogueactive: false };
+    this.state = { passPhrase: '', date2: '', decryptedMessage: props.activeMessage.content, decryptdialogueactive: false };
   };
+
+  getDate2 = () => {
+    if(typeof this.props.activeMessage === 'object'){
+      return new Date(this.props.activeMessage.ExpireDate);
+    }
+    return this.state.date2;
+  }
 
   handleDecryption = () => {
     console.log('decryption completed')
-    this.handleDecryptToggle()
+    fetch(`http://127.0.0.1:3001/profile/decrypt/${this.state.passPhrase}`, {
+      headers: {
+        "Accept": "application/json",
+        "Content-type": "application/json"
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        content: this.state.decryptedMessage
+      })
+    }).then(res => res.json())
+      .then( response => {
+        console.log(response.data)
+        console.log(response.notice)
+        this.setState({decryptedMessage: response.data})
+      })
   };
 
   handleChange = (inputKey, value) => {
@@ -26,7 +47,10 @@ class ReceiveCard extends Component {
   };
 
   handleDecryptToggle = () => {
-    this.setState({decryptdialogueactive: !this.state.decryptdialogueactive});
+    this.setState({
+      decryptedMessage: this.props.activeMessage.content,
+      decryptdialogueactive: !this.state.decryptdialogueactive
+    });
   };
 
   decryptActions = [
@@ -38,20 +62,20 @@ class ReceiveCard extends Component {
     return (
       <div id='receiveContainer'>
         <Card style={{width: '350px'}} id='receiveCardContainer'>
-          <CardTitle title="Tovia's Enigma" subtitle="Receive Card" />
+          <CardTitle title="Tovia's Enigma" subtitle="Selected Message Card" />
 
           <CardText>
             <Input id="phInput" required type="text"
-              label="Passphrase" onChange={this.handleChange.bind(this, "passphrase")}
-              value={this.state.passphrase} maxLength={5} />
+              label="Passphrase" onChange={this.handleChange.bind(this, "passPhrase")}
+              value={this.state.passPhrase} maxLength={5} />
+          </CardText>
+
+          <CardText id='inputMessageContainer'>
+            <Input required multiline type='text' label='Message' value={this.props.activeMessage.content} maxLength={120} />
           </CardText>
 
           <CardText>
-            <Input required multiline type='text' label='Message' onChange={this.handleChange.bind(this, 'message')} value={this.state.message} maxLength={120} />
-          </CardText>
-
-          <CardText>
-            <DatePicker required sundayFirstDayOfWeek label='Expiration date' minDate={min_datetime} onChange={this.handleChange.bind(this, 'date2')} value={this.state.date2} />
+            <DatePicker required sundayFirstDayOfWeek disabled label='Expiration date' minDate={min_datetime} value={this.getDate2()} />
           </CardText>
 
           <CardActions>
@@ -64,7 +88,7 @@ class ReceiveCard extends Component {
               onOverlayClick={this.handleDecryptToggle}
               title='Decrypt Message'
             >
-              <Input required multiline type='text' label='Message' onChange={this.handleChange.bind(this, 'message')} value={this.state.message} maxLength={120} />
+              <Input required multiline type='text' label='Message' value={this.state.decryptedMessage} maxLength={120} />
             </Dialog>
           </CardActions>
         </Card>

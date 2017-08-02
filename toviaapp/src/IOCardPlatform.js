@@ -9,9 +9,19 @@ class IOCardPlatform extends Component {
 
   constructor() {
     super();
-    this.state = { profile: '', passPhrase: '', userInbox: '', userOutbox: '' };
+    this.state = { profile: '', passPhrase: '', userInbox: '', userOutbox: '', activeMessage: '' };
     this.handleProfileData = this.handleProfileData.bind(this);
     this.handleProfileData();
+  };
+
+  handleMessageSelect = (boxNum, rowNum) => {
+    if(boxNum === 0){
+      console.log(this.state.userInbox[rowNum])
+      this.setState({ activeMessage: this.state.userInbox[rowNum] });
+    } else {
+      console.log(this.state.userOutbox[rowNum])
+      this.setState({ activeMessage: this.state.userOutbox[rowNum] });
+    }
   };
 
   handlePassPhrase = () => {
@@ -69,7 +79,7 @@ class IOCardPlatform extends Component {
           outboxEntry.push({
             sentTo: result.outbox[i].toUser,
             PassPhrase: result.outbox[i].passPhrase,
-            // content: result.outbox[i].content,
+            content: result.outbox[i].content,
             SendDate: result.outbox[i].createdAt,
             ExpireDate: result.outbox[i].expireDate
           })
@@ -78,8 +88,7 @@ class IOCardPlatform extends Component {
         for(var j = result.inbox.length - 1; j >= 0; j--){
           inboxEntry.push({
             From: result.inbox[j].fromUser,
-            // PassPhrase: result.inbox[j].passPhrase,
-            // content: result.inbox[j].content,
+            content: result.inbox[j].content,
             ReceiveDate: result.inbox[j].createdAt,
             ExpireDate: result.inbox[j].expireDate
           })
@@ -102,10 +111,13 @@ class IOCardPlatform extends Component {
   render() {
     return (
       <div id='ioCardPlatformContainer'>
-        <UserData data={this.state.profile} passPhrase={this.state.passPhrase} passPhraseChange={this.handlePassPhrase}/>
-        <SendCard data={this.state.profile} passPhrase={this.state.passPhrase} getInOutBox={this.handleProfileData} />
-        <ReceiveCard data={this.state.profile} />
-        <MessageHistory data={this.state.profile} inbox={this.state.userInbox} outbox={this.state.userOutbox} />
+        <UserData data={this.state.profile} passPhrase={this.state.passPhrase}
+         passPhraseChange={this.handlePassPhrase}/>
+        <SendCard data={this.state.profile} passPhrase={this.state.passPhrase}
+         getInOutBox={this.handleProfileData} />
+        <ReceiveCard data={this.state.profile} activeMessage={this.state.activeMessage} />
+        <MessageHistory data={this.state.profile} inbox={this.state.userInbox}
+         outbox={this.state.userOutbox} selectMessage={this.handleMessageSelect} />
       </div>
     );
   }

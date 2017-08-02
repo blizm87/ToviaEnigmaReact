@@ -8,38 +8,34 @@ class MessageHistory extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      profile: this.props.data, selected: [],
-      inbox: this.props.inbox, outbox: this.props.outbox,
-      true: true, false: false, selected: false,
-      check1: true, check2: false
+      profile: this.props.data, inbox: this.props.inbox, outbox: this.props.outbox
     };
   }
 
   handleSelect = (num, value) => {
+    let counterRow;
+    if(num === 0 ){
+      counterRow = document.querySelectorAll('Table>tbody')[1].querySelectorAll('tr');
+    } else {
+      counterRow = document.querySelectorAll('Table>tbody')[0].querySelectorAll('tr');
+    }
     let allRows = document.querySelectorAll('Table>tbody')[num].querySelectorAll('tr');
     let target = document.querySelectorAll('Table>tbody')[num].querySelectorAll('tr>td>label>div')[value];
-    for(var i = 0; i < allRows.length; i++){
-      if(i !== value[0]) {
-        allRows[i].querySelector('td>label>div').className = '_1CXAo';
+    for(var i = 0; i < counterRow.length; i++){
+      counterRow[i].querySelector('td>label>div').className = '_1CXAo';
+    }
+    for(var j = 0; j < allRows.length; j++){
+      if(j !== value[0]) {
+        allRows[j].querySelector('td>label>div').className = '_1CXAo';
       }
     }
-    if(target.className == '_1CXAo'){
+    if(target.className === '_1CXAo'){
       target.className = '_1CXAo nSz7s';
-      console.log('change')
+      this.props.selectMessage(num, value)
     } else {
       target.className = '_1CXAo';
-      console.log('original')
     }
   };
-
-  handleClick = (field, value) => {
-    console.log(field)
-    console.log(this.state.check1)
-    console.log(value)
-    console.log(this.state.check1)
-    this.setState({...this.state, [field]: value});
-    console.log(this.state.check1)
-  }
 
   createInboxTable = () => {
     if(typeof this.props.inbox === 'object') {
