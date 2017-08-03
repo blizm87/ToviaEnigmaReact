@@ -15,12 +15,11 @@ class SendCard extends Component {
     super(props);
     this.state = {
       message: '', date2: '', sendTo: '', sendToUser: '',
-      encryptdialogueactive: false, errordialogueactive: false
+      encryptdialogueactive: false, errordialogueactive: false, errorsendtodialogueactive: false
     };
   };
 
   handleEncryption = () => {
-    this.handleEncryptToggle()
     fetch(`http://127.0.0.1:3001/profile/${this.props.data.userId}`, {
       headers: {
         "Accept": "application/json",
@@ -39,7 +38,8 @@ class SendCard extends Component {
       sendTo: '',
       message: '',
       encryptedMessage: '',
-      date2: ''
+      date2: '',
+      encryptdialogueactive: !this.state.encryptdialogueactive
     })
     this.props.getInOutBox();
   };
@@ -79,8 +79,8 @@ class SendCard extends Component {
               });
             } else {
               this.setState({
-                errordialogueactive: !this.state.errordialogueactive
-              })
+                errorsendtodialogueactive: !this.state.errorsendtodialogueactive
+              });
             }
         })
     } else {
@@ -91,13 +91,17 @@ class SendCard extends Component {
   };
 
   encryptActions = [
-    { label: "Close", onClick: this.handleEncryptToggle },
+    { label: "Close", onClick: () => this.setState({encryptdialogueactive: !this.state.encryptdialogueactive}) },
     { label: "Send", onClick: this.handleEncryption }
   ];
 
   errorActions = [
-    { label: "Close", onClick: this.handleEncryptToggle}
-  ]
+    { label: "Close", onClick: this.handleEncryptToggle }
+  ];
+
+  errorSendToActions = [
+    { label: "Close", onClick: () => this.setState({errorsendtodialogueactive: !this.state.errorsendtodialogueactive})  }
+  ];
 
   render() {
     return (
@@ -124,8 +128,8 @@ class SendCard extends Component {
             <Dialog
               actions={this.encryptActions}
               active={this.state.encryptdialogueactive}
-              onEscKeyDown={this.handleEncryptToggle}
-              onOverlayClick={this.handleEncryptToggle}
+              onEscKeyDown={() => this.setState({encryptdialogueactive: !this.state.encryptdialogueactive})}
+              onOverlayClick={() => this.setState({encryptdialogueactive: !this.state.encryptdialogueactive})}
               title='Encrypt Message'
             >
               <Input required multiline type='text' label='Message' value={this.state.message} maxLength={120} />
@@ -139,11 +143,23 @@ class SendCard extends Component {
               title='Error Message'
             >
               <Input required multiline type='text' label='Message'
-               value='An error has occured. Expiration date and message cannot be blank,
-                and a proper profile name must be entered into the "Send To" input.
-                Please double check spelling of profile name because spelling "Is" case
-                sensative. Plese exit and try again.' />
+               value='An error has occured. Expiration date or message cannot be blank.
+                Please exit and try again.' />
             </Dialog>
+
+            <Dialog
+              actions={this.errorSendToActions}
+              active={this.state.errorsendtodialogueactive}
+              onEscKeyDown={this.handleEncryptToggle}
+              onOverlayClick={this.handleEncryptToggle}
+              title='Error Message'
+            >
+              <Input required multiline type='text' label='Message'
+               value='A proper profile name must be entered into the "Send To" input
+                Please double check spelling of the profile name because spelling "Is" case
+                sensative.' />
+            </Dialog>
+
           </CardActions>
         </Card>
       </div>

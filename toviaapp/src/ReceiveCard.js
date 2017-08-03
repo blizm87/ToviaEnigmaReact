@@ -14,7 +14,7 @@ class ReceiveCard extends Component {
   constructor(props) {
     super(props);
     this.state = { passPhrase: '', date2: '', decryptedMessage: props.activeMessage.content,
-     decryptdialogueactive: false, errordialogueactive: false
+     decryptdialogueactive: false, errordialogueactive: false, errornoobjectdialogueactive: false
     };
   };
 
@@ -50,15 +50,26 @@ class ReceiveCard extends Component {
   };
 
   handleDecryptToggle = () => {
-    if(this.props.activeMessage.PassPhrase === this.state.passPhrase && this.state.passPhrase !== ''){
-      this.setState({
-        decryptedMessage: this.props.activeMessage.content,
-        decryptdialogueactive: !this.state.decryptdialogueactive
-      });
+    if(typeof this.props.activeMessage === 'object'){
+      if(this.props.activeMessage.PassPhrase === this.state.passPhrase && this.state.passPhrase !== ''){
+        this.setState({
+          decryptedMessage: this.props.activeMessage.content,
+          decryptdialogueactive: !this.state.decryptdialogueactive
+        });
+      } else if(this.props.activeMessage.PassPhrase === '' && this.props.activeMessage.ExpireDate === '' && this.props.activeMessage.content === '') {
+          this.setState({
+            errornoobjectdialogueactive: !this.state.errornoobjectdialogueactive
+          });
+        } else {
+            this.setState({
+              errordialogueactive: !this.state.errordialogueactive
+            })
+          }
     } else {
+      console.log('hello')
       this.setState({
-        errordialogueactive: !this.state.errordialogueactive
-      });
+        errornoobjectdialogueactive: !this.state.errornoobjectdialogueactive
+      })
     }
   };
 
@@ -68,6 +79,10 @@ class ReceiveCard extends Component {
   ];
 
   errorActions = [
+    { label: "Close", onClick: this.handleDecryptToggle }
+  ]
+
+  errorNoObjectActions = [
     { label: "Close", onClick: this.handleDecryptToggle }
   ]
 
@@ -112,7 +127,18 @@ class ReceiveCard extends Component {
               title='Error Message'
             >
               <Input required multiline type='text' label='Message'
-               value='Your PassPhrase is incorrect. Please exit and try again.' maxLength={120} />
+               value='Your PassPhrase is incorrect. Please exit and try again.' />
+            </Dialog>
+
+            <Dialog
+              actions={this.errorNoObjectActions}
+              active={this.state.errornoobjectdialogueactive}
+              onEscKeyDown={this.handleDecryptToggle}
+              onOverlayClick={this.handleDecryptToggle}
+              title='Error Message'
+            >
+              <Input required multiline type='text' label='Message'
+               value='A message has not been selected. Please select a message from Message History' />
             </Dialog>
           </CardActions>
         </Card>

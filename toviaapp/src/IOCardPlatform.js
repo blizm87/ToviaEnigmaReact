@@ -12,6 +12,7 @@ class IOCardPlatform extends Component {
     this.state = { profile: '', passPhrase: '', userInbox: '', userOutbox: '', activeMessage: '' };
     this.handleProfileData = this.handleProfileData.bind(this);
     this.handleProfileData();
+
   };
 
   handleMessageSelect = (boxNum, rowNum, trigger) => {
@@ -113,10 +114,9 @@ class IOCardPlatform extends Component {
          passPhraseChange={this.handlePassPhrase} />
         <SendCard data={this.state.profile} passPhrase={this.state.passPhrase}
          getInOutBox={this.handleProfileData} />
-        <ReceiveCard data={this.state.profile} activeMessage={this.state.activeMessage} trigger={this.state.trigger} />
+        <ReceiveCard data={this.state.profile} activeMessage={this.state.activeMessage} />
         <MessageHistory data={this.state.profile} inbox={this.state.userInbox}
-         outbox={this.state.userOutbox} selectMessage={this.handleMessageSelect}
-         clearReceiveCard={this.handleClearReceiveCard} />
+         outbox={this.state.userOutbox} selectMessage={this.handleMessageSelect} />
       </div>
     );
   }
