@@ -45,7 +45,7 @@ class UserData extends Component {
         }
       }`
 
-      fetch('http://127.0.0.1:3001/graphql', {
+      fetch('https://nameless-brook-20005.herokuapp.com/graphql', {
         headers: {
           "Accept": "application/json",
           "Content-type": "application/json"

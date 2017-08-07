@@ -20,7 +20,7 @@ class SendCard extends Component {
   };
 
   handleEncryption = () => {
-    fetch(`http://127.0.0.1:3001/profile/${this.props.data.userId}`, {
+    fetch(`https://nameless-brook-20005.herokuapp.com/profile/${this.props.data.userId}`, {
       headers: {
         "Accept": "application/json",
         "Content-type": "application/json"
@@ -57,7 +57,7 @@ class SendCard extends Component {
         }
       }`
 
-      fetch('http://127.0.0.1:3001/graphql', {
+      fetch('https://nameless-brook-20005.herokuapp.com/graphql', {
         headers: {
           "Accept": "application/json",
           "Content-type": "application/json"

@@ -31,7 +31,7 @@ class ReceiveCard extends Component {
   }
 
   handleDecryption = () => {
-    fetch(`http://127.0.0.1:3001/profile/decrypt/${this.state.passPhrase}`, {
+    fetch(`https://nameless-brook-20005.herokuapp.com/profile/decrypt/${this.state.passPhrase}`, {
       headers: {
         "Accept": "application/json",
         "Content-type": "application/json"
