@@ -6,10 +6,18 @@
       min-height: 407px;
     }
 
-    #passPhraseContainer {
-      text-align: center;
-    }
-
-        #passPhraseContainer>Button, #passPhraseContainer>p>Button:hover {
-          background-color: white;
+        #allProfilesContainer {
+          text-align: center;
+          background-color: lavender;
+          height: 120px;
+          max-height: 120px;
+          overflow: scroll;
         }
+
+        #passPhraseContainer {
+          text-align: center;
+        }
+
+            #passPhraseContainer>Button, #passPhraseContainer>p>Button:hover {
+              background-color: white;
+            }

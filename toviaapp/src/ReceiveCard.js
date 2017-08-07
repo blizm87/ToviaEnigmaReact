@@ -14,7 +14,8 @@ class ReceiveCard extends Component {
   constructor(props) {
     super(props);
     this.state = { passPhrase: '', date2: '', decryptedMessage: props.activeMessage.content,
-     decryptdialogueactive: false, errordialogueactive: false, errornoobjectdialogueactive: false
+     decryptdialogueactive: false, errordialogueactive: false, errornoobjectdialogueactive: false,
+     expirationexceededdialogueactive: false
     };
   };
 
@@ -52,10 +53,16 @@ class ReceiveCard extends Component {
   handleDecryptToggle = () => {
     if(typeof this.props.activeMessage === 'object'){
       if(this.props.activeMessage.PassPhrase === this.state.passPhrase && this.state.passPhrase !== ''){
-        this.setState({
-          decryptedMessage: this.props.activeMessage.content,
-          decryptdialogueactive: !this.state.decryptdialogueactive
-        });
+        if(Date.now() >= new Date(this.props.activeMessage.ExpireDate).getTime()){
+          this.setState({
+            expirationexceededdialogueactive: !this.state.expirationexceededdialogueactive
+          })
+        } else {
+            this.setState({
+              decryptedMessage: this.props.activeMessage.content,
+              decryptdialogueactive: !this.state.decryptdialogueactive
+            });
+          }
       } else if(this.props.activeMessage.PassPhrase === '' && this.props.activeMessage.ExpireDate === '' && this.props.activeMessage.content === '') {
           this.setState({
             errornoobjectdialogueactive: !this.state.errornoobjectdialogueactive
@@ -83,6 +90,10 @@ class ReceiveCard extends Component {
   ]
 
   errorNoObjectActions = [
+    { label: "Close", onClick: this.handleDecryptToggle }
+  ]
+
+  expirationExceededActions = [
     { label: "Close", onClick: this.handleDecryptToggle }
   ]
 
@@ -139,6 +150,17 @@ class ReceiveCard extends Component {
             >
               <Input required multiline type='text' label='Message'
                value='A message has not been selected. Please select a message from Message History' />
+            </Dialog>
+
+            <Dialog
+              actions={this.expirationExceededActions}
+              active={this.state.expirationexceededdialogueactive}
+              onEscKeyDown={this.handleDecryptToggle}
+              onOverlayClick={this.handleDecryptToggle}
+              title='Error Message'
+            >
+              <Input required multiline type='text' label='Message'
+               value='The expiration date on this message has expired. This message is no longer decryptable.' />
             </Dialog>
           </CardActions>
         </Card>
