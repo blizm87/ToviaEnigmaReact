@@ -38,6 +38,7 @@ class IOCardPlatform extends Component {
   };
 
   handleProfileData() {
+    console.log('CONSOLE.LOGGING THE PROBLEM')
     let urlParams = new URLSearchParams(window.location.search);
     let paramRes = urlParams.get('userId')
     const query = `{
