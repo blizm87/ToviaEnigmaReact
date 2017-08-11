@@ -75,6 +75,7 @@ class IOCardPlatform extends Component {
       .then( res => res.json() )
       .then( messageData => {
         let result = messageData.data.getProfileData[0];
+        console.log(result)
         let outboxEntry = [];
         for(var i = result.outbox.length - 1; i >= 0; i--){
           outboxEntry.push({
