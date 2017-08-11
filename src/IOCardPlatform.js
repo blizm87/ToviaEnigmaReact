@@ -12,7 +12,6 @@ class IOCardPlatform extends Component {
     this.state = { profile: '', passPhrase: '', userInbox: '', userOutbox: '', activeMessage: '' };
     this.handleProfileData = this.handleProfileData.bind(this);
     this.handleProfileData();
-
   };
 
   handleMessageSelect = (boxNum, rowNum, trigger) => {
