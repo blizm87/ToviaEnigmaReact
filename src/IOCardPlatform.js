@@ -62,7 +62,7 @@ class IOCardPlatform extends Component {
         }
       }
     }`
-
+    console.log('I AM FETCH REQUEST')
 
     fetch('https://nameless-brook-20005.herokuapp.com/graphql', {
       headers: {
@@ -75,6 +75,7 @@ class IOCardPlatform extends Component {
       .then( res => res.json() )
       .then( messageData => {
         let result = messageData.data.getProfileData[0];
+        console.log('I AM THE RESULT OF FETCH REQUEST')
         console.log(result)
         let outboxEntry = [];
         for(var i = result.outbox.length - 1; i >= 0; i--){
