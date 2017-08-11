@@ -22,5 +22,5 @@
     "eject": "react-scripts eject"
   },
   "proxy": "http://localhost:3001",
-  "homepage" : "https://afternoon-cliffs-80859.herokuapp.com"
+  "homepage": "https://afternoon-cliffs-80859.herokuapp.com"
 }
