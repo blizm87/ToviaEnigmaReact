@@ -40,6 +40,7 @@ class IOCardPlatform extends Component {
   handleProfileData() {
     let urlParams = new URLSearchParams(window.location.search);
     let paramRes = urlParams.get('userId')
+    console.log(paramRes)
     const query = `{
       getProfileData(userId: \"${paramRes}\") {
         userId
@@ -77,31 +78,34 @@ class IOCardPlatform extends Component {
         let result = messageData.data.getProfileData[0];
         console.log('I AM THE RESULT OF FETCH REQUEST')
         console.log(result)
-        let outboxEntry = [];
-        for(var i = result.outbox.length - 1; i >= 0; i--){
-          outboxEntry.push({
-            sentTo: result.outbox[i].toUser,
-            PassPhrase: result.outbox[i].passPhrase,
-            content: result.outbox[i].content,
-            SendDate: result.outbox[i].createdAt,
-            ExpireDate: result.outbox[i].expireDate
-          })
-        }
-        let inboxEntry = [];
-        for(var j = result.inbox.length - 1; j >= 0; j--){
-          inboxEntry.push({
-            From: result.inbox[j].fromUser,
-            PassPhrase: result.inbox[j].passPhrase,
-            content: result.inbox[j].content,
-            ReceiveDate: result.inbox[j].createdAt,
-            ExpireDate: result.inbox[j].expireDate
-          })
-        }
+        if(result !== undefined) {
+
+          let outboxEntry = [];
+          for(var i = result.outbox.length - 1; i >= 0; i--){
+            outboxEntry.push({
+              sentTo: result.outbox[i].toUser,
+              PassPhrase: result.outbox[i].passPhrase,
+              content: result.outbox[i].content,
+              SendDate: result.outbox[i].createdAt,
+              ExpireDate: result.outbox[i].expireDate
+            })
+          }
+          let inboxEntry = [];
+          for(var j = result.inbox.length - 1; j >= 0; j--){
+            inboxEntry.push({
+              From: result.inbox[j].fromUser,
+              PassPhrase: result.inbox[j].passPhrase,
+              content: result.inbox[j].content,
+              ReceiveDate: result.inbox[j].createdAt,
+              ExpireDate: result.inbox[j].expireDate
+            })
+          }
         this.setState({
           profile: result,
           userInbox: inboxEntry,
           userOutbox: outboxEntry
         });
+        }
       })
   };
 
