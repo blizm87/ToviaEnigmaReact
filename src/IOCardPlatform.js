@@ -40,7 +40,6 @@ class IOCardPlatform extends Component {
   handleProfileData() {
     let urlParams = new URLSearchParams(window.location.search);
     let paramRes = urlParams.get('userId')
-    console.log(paramRes)
     const query = `{
       getProfileData(userId: \"${paramRes}\") {
         userId
@@ -65,45 +64,83 @@ class IOCardPlatform extends Component {
     }`
 
     if( paramRes !== null){
-
-    fetch('https://nameless-brook-20005.herokuapp.com/graphql', {
-      headers: {
-        "Accept": "application/json",
-        "Content-type": "application/json"
-      },
-      method: 'POST',
-      body: JSON.stringify({query,"variables":null,"operationName":null})
-    })
-      .then( res => res.json() )
-      .then( messageData => {
-        console.log(messageData)
-        let result = messageData.data.getProfileData[0];
-        let outboxEntry = [];
-        for(var i = result.outbox.length - 1; i >= 0; i--){
-          outboxEntry.push({
-            sentTo: result.outbox[i].toUser,
-            PassPhrase: result.outbox[i].passPhrase,
-            content: result.outbox[i].content,
-            SendDate: result.outbox[i].createdAt,
-            ExpireDate: result.outbox[i].expireDate
+      if(window.location.hostname === '127.0.0.1') {
+        fetch('http://127.0.0.1:3001/graphql', {
+          headers: {
+            "Accept": "application/json",
+            "Content-type": "application/json"
+          },
+          method: 'POST',
+          body: JSON.stringify({query,"variables":null,"operationName":null})
+        })
+          .then( res => res.json() )
+          .then( messageData => {
+            let result = messageData.data.getProfileData[0];
+            let outboxEntry = [];
+            for(var i = result.outbox.length - 1; i >= 0; i--){
+              outboxEntry.push({
+                sentTo: result.outbox[i].toUser,
+                PassPhrase: result.outbox[i].passPhrase,
+                content: result.outbox[i].content,
+                SendDate: result.outbox[i].createdAt,
+                ExpireDate: result.outbox[i].expireDate
+              })
+            }
+            let inboxEntry = [];
+            for(var j = result.inbox.length - 1; j >= 0; j--){
+              inboxEntry.push({
+                From: result.inbox[j].fromUser,
+                PassPhrase: result.inbox[j].passPhrase,
+                content: result.inbox[j].content,
+                ReceiveDate: result.inbox[j].createdAt,
+                ExpireDate: result.inbox[j].expireDate
+              })
+            }
+            this.setState({
+              profile: result,
+              userInbox: inboxEntry,
+              userOutbox: outboxEntry
+            });
           })
-        }
-        let inboxEntry = [];
-        for(var j = result.inbox.length - 1; j >= 0; j--){
-          inboxEntry.push({
-            From: result.inbox[j].fromUser,
-            PassPhrase: result.inbox[j].passPhrase,
-            content: result.inbox[j].content,
-            ReceiveDate: result.inbox[j].createdAt,
-            ExpireDate: result.inbox[j].expireDate
+      } else {
+          fetch('https://nameless-brook-20005.herokuapp.com/graphql', {
+            headers: {
+              "Accept": "application/json",
+              "Content-type": "application/json"
+            },
+            method: 'POST',
+            body: JSON.stringify({query,"variables":null,"operationName":null})
           })
-        }
-        this.setState({
-          profile: result,
-          userInbox: inboxEntry,
-          userOutbox: outboxEntry
-        });
-      })
+            .then( res => res.json() )
+            .then( messageData => {
+              let result = messageData.data.getProfileData[0];
+              let outboxEntry = [];
+              for(var i = result.outbox.length - 1; i >= 0; i--){
+                outboxEntry.push({
+                  sentTo: result.outbox[i].toUser,
+                  PassPhrase: result.outbox[i].passPhrase,
+                  content: result.outbox[i].content,
+                  SendDate: result.outbox[i].createdAt,
+                  ExpireDate: result.outbox[i].expireDate
+                })
+              }
+              let inboxEntry = [];
+              for(var j = result.inbox.length - 1; j >= 0; j--){
+                inboxEntry.push({
+                  From: result.inbox[j].fromUser,
+                  PassPhrase: result.inbox[j].passPhrase,
+                  content: result.inbox[j].content,
+                  ReceiveDate: result.inbox[j].createdAt,
+                  ExpireDate: result.inbox[j].expireDate
+                })
+              }
+              this.setState({
+                profile: result,
+                userInbox: inboxEntry,
+                userOutbox: outboxEntry
+              });
+            })
+      }
     }
   };
 

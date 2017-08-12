@@ -31,19 +31,35 @@ class ReceiveCard extends Component {
   }
 
   handleDecryption = () => {
-    fetch(`https://nameless-brook-20005.herokuapp.com/profile/decrypt/${this.state.passPhrase}`, {
-      headers: {
-        "Accept": "application/json",
-        "Content-type": "application/json"
-      },
-      method: 'POST',
-      body: JSON.stringify({
-        content: this.state.decryptedMessage
-      })
-    }).then(res => res.json())
-      .then( response => {
-        this.setState({decryptedMessage: response.data})
-      })
+    if(window.location.hostname === '127.0.0.1'){
+      fetch(`http://127.0.0.1:3001/profile/decrypt/${this.state.passPhrase}`, {
+        headers: {
+          "Accept": "application/json",
+          "Content-type": "application/json"
+        },
+        method: 'POST',
+        body: JSON.stringify({
+          content: this.state.decryptedMessage
+        })
+      }).then(res => res.json())
+        .then( response => {
+          this.setState({decryptedMessage: response.data})
+        })
+    } else {
+        fetch(`https://nameless-brook-20005.herokuapp.com/profile/decrypt/${this.state.passPhrase}`, {
+          headers: {
+            "Accept": "application/json",
+            "Content-type": "application/json"
+          },
+          method: 'POST',
+          body: JSON.stringify({
+            content: this.state.decryptedMessage
+          })
+        }).then(res => res.json())
+          .then( response => {
+            this.setState({decryptedMessage: response.data})
+          })
+    }
   };
 
   handleChange = (inputKey, value) => {

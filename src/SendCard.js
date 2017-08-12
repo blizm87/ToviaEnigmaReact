@@ -20,20 +20,38 @@ class SendCard extends Component {
   };
 
   handleEncryption = () => {
-    fetch(`https://nameless-brook-20005.herokuapp.com/profile/${this.props.data.userId}`, {
-      headers: {
-        "Accept": "application/json",
-        "Content-type": "application/json"
-      },
-      method: 'POST',
-      body: JSON.stringify({
-        toUser: this.state.sendTo,
-        fromUser: this.props.data.displayName,
-        passPhrase: this.props.passPhrase,
-        content: this.state.message,
-        expireDate: this.state.date2
-      })
-    }).then(function(res){  console.log(res)  })
+    if(window.location.hostname === '127.0.0.1') {
+      fetch(`http://127.0.0.1:3001/profile/${this.props.data.userId}`, {
+        headers: {
+          "Accept": "application/json",
+          "Content-type": "application/json"
+        },
+        method: 'POST',
+        body: JSON.stringify({
+          toUser: this.state.sendTo,
+          fromUser: this.props.data.displayName,
+          passPhrase: this.props.passPhrase,
+          content: this.state.message,
+          expireDate: this.state.date2
+        })
+      }).then(function(res){  console.log(res)  })
+    } else {
+        fetch(`https://nameless-brook-20005.herokuapp.com/profile/${this.props.data.userId}`, {
+          headers: {
+            "Accept": "application/json",
+            "Content-type": "application/json"
+          },
+          method: 'POST',
+          body: JSON.stringify({
+            toUser: this.state.sendTo,
+            fromUser: this.props.data.displayName,
+            passPhrase: this.props.passPhrase,
+            content: this.state.message,
+            expireDate: this.state.date2
+          })
+        }).then(function(res){  console.log(res)  })
+    }
+
     this.setState({
       sendTo: '',
       message: '',
@@ -57,32 +75,61 @@ class SendCard extends Component {
         }
       }`
 
-      fetch('https://nameless-brook-20005.herokuapp.com/graphql', {
-        headers: {
-          "Accept": "application/json",
-          "Content-type": "application/json"
-        },
-        method: 'POST',
-        body: JSON.stringify({query,"variables":null,"operationName":null})
-      }).then(  res => res.json() )
-        .then( (response) => {
-          response.data.getProfileData.map( (profile) => {
-            if(this.state.sendTo === profile.displayName){
-              this.setState({ sendToUser: profile.displayName });
-            }
-            return null;
+      if(window.location.hostname === '127.0.0.1'){
+        fetch('http://127.0.0.1:3001/graphql', {
+          headers: {
+            "Accept": "application/json",
+            "Content-type": "application/json"
+          },
+          method: 'POST',
+          body: JSON.stringify({query,"variables":null,"operationName":null})
+        }).then(  res => res.json() )
+          .then( (response) => {
+            response.data.getProfileData.map( (profile) => {
+              if(this.state.sendTo === profile.displayName){
+                this.setState({ sendToUser: profile.displayName });
+              }
+              return null;
+            })
+              if(this.state.sendTo === this.state.sendToUser && this.state.sendTo !== ''){
+                this.setState({
+                  sendToUser: '',
+                  encryptdialogueactive: !this.state.encryptdialogueactive
+                });
+              } else {
+                this.setState({
+                  errorsendtodialogueactive: !this.state.errorsendtodialogueactive
+                });
+              }
           })
-            if(this.state.sendTo === this.state.sendToUser && this.state.sendTo !== ''){
-              this.setState({
-                sendToUser: '',
-                encryptdialogueactive: !this.state.encryptdialogueactive
-              });
-            } else {
-              this.setState({
-                errorsendtodialogueactive: !this.state.errorsendtodialogueactive
-              });
-            }
-        })
+      } else {
+          fetch('https://nameless-brook-20005.herokuapp.com/graphql', {
+            headers: {
+              "Accept": "application/json",
+              "Content-type": "application/json"
+            },
+            method: 'POST',
+            body: JSON.stringify({query,"variables":null,"operationName":null})
+          }).then(  res => res.json() )
+            .then( (response) => {
+              response.data.getProfileData.map( (profile) => {
+                if(this.state.sendTo === profile.displayName){
+                  this.setState({ sendToUser: profile.displayName });
+                }
+                return null;
+              })
+                if(this.state.sendTo === this.state.sendToUser && this.state.sendTo !== ''){
+                  this.setState({
+                    sendToUser: '',
+                    encryptdialogueactive: !this.state.encryptdialogueactive
+                  });
+                } else {
+                  this.setState({
+                    errorsendtodialogueactive: !this.state.errorsendtodialogueactive
+                  });
+                }
+            })
+      }
     } else {
         this.setState({
           errordialogueactive: !this.state.errordialogueactive

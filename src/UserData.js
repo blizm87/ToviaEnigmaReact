@@ -45,17 +45,31 @@ class UserData extends Component {
         }
       }`
 
-      fetch('https://nameless-brook-20005.herokuapp.com/graphql', {
-        headers: {
-          "Accept": "application/json",
-          "Content-type": "application/json"
-        },
-        method: 'POST',
-        body: JSON.stringify({query,"variables":null,"operationName":null})
-      }).then(  res => res.json() )
-        .then( (response) => {
-          this.setState({ allProfiles: response.data.getProfileData });
-        })
+      if(window.location.hostname === '127.0.0.1'){
+        fetch('http://127.0.0.1:3001/graphql', {
+          headers: {
+            "Accept": "application/json",
+            "Content-type": "application/json"
+          },
+          method: 'POST',
+          body: JSON.stringify({query,"variables":null,"operationName":null})
+        }).then(  res => res.json() )
+          .then( (response) => {
+            this.setState({ allProfiles: response.data.getProfileData });
+          })
+      } else {
+          fetch('https://nameless-brook-20005.herokuapp.com/graphql', {
+            headers: {
+              "Accept": "application/json",
+              "Content-type": "application/json"
+            },
+            method: 'POST',
+            body: JSON.stringify({query,"variables":null,"operationName":null})
+          }).then(  res => res.json() )
+            .then( (response) => {
+              this.setState({ allProfiles: response.data.getProfileData });
+            })
+      }
   };
 
   render() {
