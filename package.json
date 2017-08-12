@@ -22,7 +22,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "toolbox": "react-toolbox-themr",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "heroku-postbuild": "yarn react-scripts start"
   },
   "homepage": "https://afternoon-cliffs-80859.herokuapp.com"
 }
