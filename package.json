@@ -1,9 +1,6 @@
 {
   "name": "toviaapp",
   "version": "0.1.0",
-  "engines": {
-    "node": "*"
-  },
   "private": true,
   "devDependencies": {
     "react-scripts": "1.0.11"
