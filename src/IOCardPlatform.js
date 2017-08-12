@@ -151,11 +151,13 @@ class IOCardPlatform extends Component {
   render() {
     return (
       <div id='ioCardPlatformContainer'>
-        <UserData data={this.state.profile} passPhrase={this.state.passPhrase}
-         passPhraseChange={this.handlePassPhrase} />
-        <SendCard data={this.state.profile} passPhrase={this.state.passPhrase}
-         getInOutBox={this.handleProfileData} />
-        <ReceiveCard data={this.state.profile} activeMessage={this.state.activeMessage} />
+        <div id='topCardsContainer'>
+          <UserData data={this.state.profile} passPhrase={this.state.passPhrase}
+           passPhraseChange={this.handlePassPhrase} />
+          <SendCard data={this.state.profile} passPhrase={this.state.passPhrase}
+           getInOutBox={this.handleProfileData} />
+          <ReceiveCard data={this.state.profile} activeMessage={this.state.activeMessage} />
+        </div>
         <MessageHistory data={this.state.profile} inbox={this.state.userInbox}
          outbox={this.state.userOutbox} selectMessage={this.handleMessageSelect} />
       </div>

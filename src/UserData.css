@@ -1,6 +1,13 @@
 #userDataContainer {
-  display: inline-block;
+
 }
+
+    @media screen and (max-width: 876px) {
+      #userDataContainer {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
 
     #userDataCardContainer {
       min-height: 407px;

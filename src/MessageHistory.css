@@ -4,6 +4,8 @@
 
     #messageHistoryCardContainer {
       margin: 0 auto;
+      width: '99.85%';
+      height: '360px';
     }
 
         #cardHeader {

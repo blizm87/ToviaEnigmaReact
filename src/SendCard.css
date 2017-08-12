@@ -1,7 +1,14 @@
 #sendContainer {
-  display: inline-block;
-  margin-left: 3.1em;
+
 }
+
+    @media screen and (max-width: 876px) {
+      #sendContainer {
+        margin-top: 10px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
 
     #sendCardContainer {
       min-height: 407px;

@@ -1,8 +1,14 @@
 #receiveContainer {
-  display: inline-block;
-  margin-left: 3.1em;
-  vertical-align: top;
+
 }
+
+    @media screen and (max-width: 1314px) {
+      #receiveContainer {
+        margin-top: 10px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
 
     #receiveCardContainer {
       min-height: 407px;

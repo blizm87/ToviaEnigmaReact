@@ -66,7 +66,7 @@ class MessageHistory extends Component {
   render() {
     return (
       <div id="messageHistoryContainer">
-        <Card style={{width: '99.85%', height: '360px'}} id='messageHistoryCardContainer'>
+        <Card id='messageHistoryCardContainer'>
           <CardTitle id="cardHeader" title="Tovia's Enigma" subtitle="Message History" />
           <CardText>
             <div id='messageHistoryMainContainer'>
