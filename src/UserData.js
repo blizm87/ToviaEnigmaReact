@@ -76,7 +76,7 @@ class UserData extends Component {
     return (
       <div id='userDataContainer'>
         <Card style={{width: '350px'}} id='userDataCardContainer'>
-          <CardTitle title="Tovia's Enigma" subtitle="Profile Status" />
+          <CardTitle title="Justin's Enigma" subtitle="Profile Status" />
 
           <CardTitle id='profileContainer'
             avatar={this.props.data.imageUrl}

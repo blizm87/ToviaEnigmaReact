@@ -67,7 +67,7 @@ class MessageHistory extends Component {
     return (
       <div id="messageHistoryContainer">
         <Card id='messageHistoryCardContainer'>
-          <CardTitle id="cardHeader" title="Tovia's Enigma" subtitle="Message History" />
+          <CardTitle id="cardHeader" title="Justin's Enigma" subtitle="Message History" />
           <CardText>
             <div id='messageHistoryMainContainer'>
               <div id="inboxContainer">

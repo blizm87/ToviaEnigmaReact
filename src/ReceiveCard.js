@@ -117,7 +117,7 @@ class ReceiveCard extends Component {
     return (
       <div id='receiveContainer'>
         <Card style={{width: '350px'}} id='receiveCardContainer'>
-          <CardTitle title="Tovia's Enigma" subtitle="Selected Message Card" />
+          <CardTitle title="Justin's Enigma" subtitle="Selected Message" />
 
           <CardText>
             <Input id="phInput" required type="text"

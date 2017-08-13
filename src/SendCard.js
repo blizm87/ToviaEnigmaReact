@@ -154,7 +154,7 @@ class SendCard extends Component {
     return (
       <div id='sendContainer'>
         <Card style={{width: '350px'}} id='sendCardContainer'>
-          <CardTitle title="Tovia's Enigma" subtitle="Send Card" />
+          <CardTitle title="Justin's Enigma" subtitle="Send Message" />
 
           <CardText>
             <Input id="messageTo" required type="text"
